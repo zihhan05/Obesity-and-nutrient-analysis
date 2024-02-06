@@ -1,4 +1,6 @@
 %%sql
+### Create table according to Database Design
+### Create tables to manage synonyms for "nutrient names" and "ages"
 
 DROP TABLE IF EXISTS nutrient_names;
 DROP SEQUENCE IF EXISTS seq_nutrient_names_id;
@@ -66,3 +68,39 @@ CREATE TABLE consumptions (
     age_group_id INT,
     nutrient_id INT
 );
+
+### Load values into tables:(Example: "consumers' table)
+import csv
+import duckdb
+
+with duckdb.connect('duckdb-file.db') as con:
+    
+    sql_insert_consumers = """
+    INSERT INTO consumers(age_group_id, obesity_percentage) 
+    VALUES ($age_group_id, $obesity_percentage)"""
+    
+    # Read age_group_names.csv and create a dictionary for quick lookup
+    age_group_dict = {}
+    with open('age_group_names.csv') as age_group_file:
+        age_group_reader = csv.DictReader(age_group_file, delimiter=",", quotechar='"')
+        for row in age_group_reader:
+            age_group_dict[row['name']] = row['age_group_id']
+            
+    # Read obesity_ages.csv and insert data into consumers table
+    with open('obesity_age_processed.csv') as obesity_file:
+        obesity_reader = csv.DictReader(obesity_file, delimiter=",", quotechar='"')
+
+        for row in obesity_reader:
+            # Convert age to age_group_id using the dictionary
+            new_age_group_name = row['age_group']
+            if new_age_group_name in age_group_dict:
+                age_group_id = age_group_dict[new_age_group_name]
+                
+                # Insert data into the consumers table
+                param_dict = {'age_group_id': age_group_id,
+                              'obesity_percentage': row['obesity_percentage']}
+                con.execute(sql_insert_consumers, param_dict)
+            else:
+                print(f"No matching age_group_id found for {new_age_group_name}")
+
+print("Successfully loaded the table consumers !")
