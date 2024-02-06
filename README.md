@@ -3,7 +3,7 @@
 #### Clean and process .csv files using Python code
 #### Load tables via SQL to run SQL query analysis. 
 #### Visualized result with Tableau.
-![alt text]()
+![alt text](./results_image/Query1.png)
 ## Project description
 In this project, our aim is to analyze the relationship between the consumption of specific dairy products—butter, cheese, cream, yogurt, and ice-cream 
 and obesity rates across various age groups in 2017-2018. 
