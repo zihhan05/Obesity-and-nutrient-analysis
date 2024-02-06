@@ -1,0 +1,68 @@
+%%sql
+
+DROP TABLE IF EXISTS nutrient_names;
+DROP SEQUENCE IF EXISTS seq_nutrient_names_id;
+CREATE SEQUENCE seq_nutrient_names_id START 1;
+CREATE TABLE nutrient_names (
+    id INT PRIMARY KEY DEFAULT NEXTVAL('seq_nutrient_names_id'),
+    name TEXT,
+    nutrient_id INT
+);
+
+DROP TABLE IF EXISTS nutrients;
+CREATE TABLE nutrients (
+    id INT PRIMARY KEY,
+    name TEXT
+);
+
+DROP TABLE IF EXISTS nutrient_in_ingredients;
+DROP SEQUENCE IF EXISTS seq_nutrient_in_ingredients_id;
+CREATE SEQUENCE seq_nutrient_in_ingredients_id START 1;
+CREATE TABLE nutrient_in_ingredients (
+    id INT PRIMARY KEY DEFAULT NEXTVAL('seq_nutrient_in_ingredients_id'),
+    ingredient_id INT,
+    nutrient_id INT,
+    value DECIMAL
+);
+
+DROP TABLE IF EXISTS ingredients;
+CREATE TABLE ingredients (
+    id INT PRIMARY KEY,
+    name TEXT
+);
+
+DROP TABLE IF EXISTS age_group_names;
+DROP SEQUENCE IF EXISTS seq_age_group_names_id;
+CREATE SEQUENCE seq_age_group_names_id START 1;
+CREATE TABLE age_group_names (
+    id INT PRIMARY KEY DEFAULT NEXTVAL('seq_age_group_names_id'),
+    name TEXT,
+    age_group_id INT
+);
+
+DROP TABLE IF EXISTS age_groups;
+DROP SEQUENCE IF EXISTS seq_age_groups_id;
+CREATE SEQUENCE seq_age_groups_id START 1;
+CREATE TABLE age_groups (
+    id INT PRIMARY KEY DEFAULT NEXTVAL('seq_age_groups_id'),
+    name TEXT  
+);
+
+DROP TABLE IF EXISTS consumers;
+DROP SEQUENCE IF EXISTS seq_consumers_id;
+CREATE SEQUENCE seq_consumers_id START 1;
+CREATE TABLE consumers (
+    id INT PRIMARY KEY DEFAULT NEXTVAL('seq_consumers_id'),
+    age_group_id INT,
+    obesity_percentage DECIMAL
+);
+
+DROP TABLE IF EXISTS consumptions;
+DROP SEQUENCE IF EXISTS seq_consumptions_id;
+CREATE SEQUENCE seq_consumptions_id START 1;
+CREATE TABLE consumptions (
+    id INT PRIMARY KEY DEFAULT NEXTVAL('seq_consumptions_id'),
+    amount DECIMAL,
+    age_group_id INT,
+    nutrient_id INT
+);
