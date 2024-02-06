@@ -1,0 +1,109 @@
+### Analysing the consumption of Nutrient intanke in various age groups related to obesity percentages.
+### Writing the result to a new csv file using python
+
+SELECT  DISTINCT
+        age_groups.name as age_group_name, 
+        nutrients.name as nutrient_name, 
+        consumptions.amount as consumptions_amount,
+        consumers.obesity_percentage
+FROM 'age_groups'
+JOIN 'age_group_names'
+  ON age_group_names.age_group_id = age_groups.id
+JOIN (  SELECT  age_groups.id as age_group_id,
+                SUM(consumers.obesity_percentage) as obesity_percentage
+        FROM    'consumers'
+        JOIN    'age_groups'
+        ON      age_groups.id = consumers.age_group_id 
+        GROUP BY age_groups.id ) consumers
+  ON age_groups.id = consumers.age_group_id
+JOIN 'consumptions'
+  ON age_groups.id = consumptions.age_group_id
+JOIN 'nutrients'
+  ON consumptions.nutrient_id = nutrients.id
+WHERE ( lower(nutrients.name) like '%fat%' 
+       OR lower(nutrients.name) = 'cholesterol') 
+ORDER BY obesity_percentage DESC
+;
+
+import csv
+
+with duckdb.connect('duckdb-file.db') as con:
+    
+    query = """
+    SELECT  DISTINCT
+            age_groups.name as age_group_name, 
+            nutrients.name as nutrient_name, 
+            consumptions.amount as consumptions_amount,
+            consumers.obesity_percentage
+    FROM 'age_groups'
+    JOIN 'age_group_names'
+      ON age_group_names.age_group_id = age_groups.id
+    JOIN (  SELECT  age_groups.id as age_group_id,
+                    SUM(consumers.obesity_percentage) as obesity_percentage
+            FROM    'consumers'
+            JOIN    'age_groups'
+            ON      age_groups.id = consumers.age_group_id 
+            GROUP BY age_groups.id ) consumers
+      ON age_groups.id = consumers.age_group_id
+    JOIN 'consumptions'
+      ON age_groups.id = consumptions.age_group_id
+    JOIN 'nutrients'
+      ON consumptions.nutrient_id = nutrients.id
+    WHERE ( lower(nutrients.name) like '%fat%' 
+           OR lower(nutrients.name) = 'cholesterol') 
+    """
+    con.execute(query)
+    results = ClassDictCursor(con)
+       
+    with open('nutrient_intake_obesity_ages.csv', 'w') as csvfile:
+        column_names = ["age_group_name","nutrient_name","consumptions_amount","obesity_percentage"]
+        myCsvWriter = csv.DictWriter(csvfile,
+                                     fieldnames=column_names)
+
+        myCsvWriter.writeheader()
+
+        for row in results: 
+                myCsvWriter.writerow(row)
+
+print("Done writing csv")
+
+###  Analysing relation between nutrients and its value as present in different ingredients of the diary products for the highest obesity pravelence age group.
+(Using the result from Query 1)
+
+SELECT  DISTINCT
+        age_groups.name as age_group_name, 
+        nutrients.name as nutrient_name, 
+        nutrient_names.nutrient_id as nutrient_code,
+        nutrient_in_ingredients.value as nutrient_value,
+        ingredients.name as ingredient_name,
+FROM 'age_groups'
+JOIN 'age_group_names'
+  ON age_group_names.age_group_id = age_groups.id
+# Adding up adults obesity rate using grouping and SUM()
+JOIN (  SELECT  age_groups.id as age_group_id,
+                SUM(consumers.obesity_percentage) as obesity_percentage
+        FROM    'consumers'
+        JOIN    'age_groups'
+        ON      age_groups.id = consumers.age_group_id 
+        GROUP BY age_groups.id ) consumers
+  ON age_groups.id = consumers.age_group_id
+JOIN 'consumptions'
+  ON age_groups.id = consumptions.age_group_id
+JOIN 'nutrients'
+  ON consumptions.nutrient_id = nutrients.id
+JOIN 'nutrient_names'
+  ON nutrients.id = nutrient_names.nutrient_id
+JOIN 'nutrient_in_ingredients'
+  ON nutrients.id = nutrient_in_ingredients.nutrient_id
+JOIN 'ingredients'
+  ON nutrient_in_ingredients.ingredient_id = ingredients.id
+WHERE ( lower(nutrients.name) like '%fat%' 
+       OR lower(nutrients.name) = 'cholesterol') 
+# looking for dairy ingredients only
+AND    ( lower(ingredients.name) like '%butter%'
+         OR lower(ingredients.name) like '%cheese%' 
+         OR lower(ingredients.name) like '%cream%'
+         OR lower(ingredients.name) like '%yogurt%' )
+AND age_groups.name = 'Adults' 
+ORDER BY nutrient_in_ingredients.value DESC ;
+
