@@ -1,6 +1,6 @@
-# Major nutrients and obesity rate by ages.
+## Major nutrients and obesity rate by ages.
 
-# Clean and process .csv files using Python code, and load tables via SQL to run SQL query analysis. Visualized result with Tableau.
+### Clean and process .csv files using Python code, and load tables via SQL to run SQL query analysis. Visualized result with Tableau.
 
 ## Project description
 In this project, our aim is to analyze the relationship between the consumption of specific dairy products—butter, cheese, cream, yogurt, and ice-cream 
