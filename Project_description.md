@@ -1,7 +1,8 @@
 ## Major nutrients and obesity rate by ages.
 
-### Clean and process .csv files using Python code, and load tables via SQL to run SQL query analysis. 
-### Visualized result with Tableau.
+#### Clean and process .csv files using Python code
+#### Load tables via SQL to run SQL query analysis. 
+#### Visualized result with Tableau.
 
 ## Project description
 In this project, our aim is to analyze the relationship between the consumption of specific dairy products—butter, cheese, cream, yogurt, and ice-cream 
@@ -47,12 +48,12 @@ Analysis Chart
 
 ## Project Challenges Highlight
 1. ### Managing Synonyms and Designing Database:
-   Dataset details:
+   ##### Dataset details:
    -Contains intricate information about ingredients and nutrient names.
    -Need to link these various names to other entities effectively.
-   Age-grouping statistics:
+   ##### Age-grouping statistics:
    -Datasets present different age ranges and names
-   Approach:
+   ##### Approach:
    -Created a new entity by extracting entire age groups and nutrient name categories.
    -Defined a unified ID for seamless data linkage.
 
@@ -62,12 +63,12 @@ Analysis Chart
    -Transform headers to align with desired data structure.
    -Index from target rows
 
-5. ### Processing Multi-Tables in One Dataset:**
-   Dataset structure:
+5. ### Processing Multi-Tables in One Dataset:
+   ##### Dataset structure:
    -Consists of one main table interspersed with multiple sub-tables.
-   Processing challenge:
+   ##### Processing challenge:
    -Need to create new columns while recognizing distinct sub-table groups.
-   Solution:
+   ##### Solution:
    -Utilized redundant rows in each sub-table to generate a flag using conditional if-else coding.
    -When encountering the "flag" value, ceased data insertion into new CSV file.
    -Jumped to the next sub-table to start a new iteration.
