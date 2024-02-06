@@ -3,7 +3,7 @@
 #### Clean and process .csv files using Python code
 #### Load tables via SQL to run SQL query analysis. 
 #### Visualized result with Tableau.
-![alt text](./results_image/Query1.png)
+
 ## Project description
 In this project, our aim is to analyze the relationship between the consumption of specific dairy products—butter, cheese, cream, yogurt, and ice-cream 
 and obesity rates across various age groups in 2017-2018. 
@@ -13,19 +13,15 @@ The analysis comprises two main parts. Firstly, we will compare nutrient intake 
 Subsequently, we will compare the selected nutrient values in ingredients for the age group with the highest obesity rates. 
 
 ## Workflow
-
-Data Collection
-
+![alt text](./images/workflow/workflow.png)
+#### Data Collection
 - Download and convert each .csv datasets from the web.
 - Upload to datacamp workplace for access.
 - Clean and process the original .csv files by removing unnecessary columns and rows. Save the refined data into a new .csv file for further actions using Python code.
 - Manage synonums by manully create new age_groups.csv, age_group_names.csv and nutrient_names.csv files for look up.
-
-SQL Database Initialization
+#### SQL Database Initialization
 - Execute SQL commands via Python to create the necessary tables and attributes  according to our ER diagram.
-
-Parsing Data and Loading into SQL Database
-
+#### Parsing Data and Loading into SQL Database
 - Use Python to read 'nutrient_names.csv' and write nutrient names synonyms and correspond nutrient id into **nutrient_names table**
 - Read 'ingredient_values_processed.csv' and write ingredient names and id into **ingredients table.**
 - Read 'ingredient_values_processed.csv' and write nutrient names and id into **nutrients table.**
@@ -35,17 +31,16 @@ Parsing Data and Loading into SQL Database
 - Read 'ingredient_values_processed.csv' write ingredient_id, nutrient_id and value in **nutrient_in_ingredients table.**
 - Read 'age_group_names.csv' and 'nutrient_names.csv' to create look up in order to replace the original synonyms. Read 'nutrient_intake_processed.csv' and write amount, age_group_id and nutrient_id into **consumptions table.**
 
-Export for Analysis
-
+#### Export for Analysis
 - Query age_group_names, age_groups, consumers, consumptions tables to compile standard age_group_name, nutrient_name, consumptions_amount and obesity_percentage in **'nutrient_intake_obesity_ages.csv' file.**
 - Query age_group_names, age_groups, consumptions, nutrients, nutrient_names, nutrient_in_ingredients, ingredients table to compile standard nutrient name, nutrient_value and ingredient_name. Filter 'Adult' age_group and create **'nutrient_value_in_ingredients.csv' file.**
 
-Analysis Chart
-
+#### Analysis Chart
 - Upload .csv files to Tableau and produce charts.
 
 ## ER Diagram
-
+![alt text](./images/workflow/conceptual_ER_diagram.png)
+![alt text](./images/workflow/physical_ER_diagram.png)
 ## Project Challenges Highlight
 1. ### Managing Synonyms and Designing Database:
    ##### Dataset details:
