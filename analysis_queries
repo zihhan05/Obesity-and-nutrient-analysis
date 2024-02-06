@@ -1,5 +1,5 @@
-### Analysing the consumption of Nutrient intanke in various age groups related to obesity percentages.
-### Writing the result to a new csv file using python
+## Analysing the consumption of Nutrient intanke in various age groups related to obesity percentages.
+## Writing the result to a new csv file using python
 
 SELECT  DISTINCT
         age_groups.name as age_group_name, 
@@ -67,7 +67,7 @@ with duckdb.connect('duckdb-file.db') as con:
 
 print("Done writing csv")
 
-###  Analysing relation between nutrients and its value as present in different ingredients of the diary products for the highest obesity pravelence age group.
+##Analysing relation between nutrients and its value as present in different ingredients of the diary products for the highest obesity pravelence age group.
 (Using the result from Query 1)
 
 SELECT  DISTINCT
