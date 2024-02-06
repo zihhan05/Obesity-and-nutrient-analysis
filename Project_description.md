@@ -50,11 +50,11 @@ Analysis Chart
    Dataset details:
    -Contains intricate information about ingredients and nutrient names.
    -Need to link these various names to other entities effectively.
-Age-grouping statistics:
--Datasets present different age ranges and names.
-Approach:
--Created a new entity by extracting entire age groups and nutrient name categories.
--Defined a unified ID for seamless data linkage.
+   Age-grouping statistics:
+   -Datasets present different age ranges and names
+   Approach:
+   -Created a new entity by extracting entire age groups and nutrient name categories.
+   -Defined a unified ID for seamless data linkage.
 
 3. ### Cleaning Multi-Header Datasets:
    -Skip redundant lines during file reading.
@@ -62,12 +62,12 @@ Approach:
    -Transform headers to align with desired data structure.
    -Index from target rows
 
-5. **Processing Multi-Tables in One Dataset:**
+5. ### Processing Multi-Tables in One Dataset:**
    Dataset structure:
    -Consists of one main table interspersed with multiple sub-tables.
-Processing challenge:
--Need to create new columns while recognizing distinct sub-table groups.
-Solution:
--Utilized redundant rows in each sub-table to generate a flag using conditional if-else coding.
--When encountering the "flag" value, ceased data insertion into new CSV file.
--Jumped to the next sub-table to start a new iteration.
+   Processing challenge:
+   -Need to create new columns while recognizing distinct sub-table groups.
+   Solution:
+   -Utilized redundant rows in each sub-table to generate a flag using conditional if-else coding.
+   -When encountering the "flag" value, ceased data insertion into new CSV file.
+   -Jumped to the next sub-table to start a new iteration.
